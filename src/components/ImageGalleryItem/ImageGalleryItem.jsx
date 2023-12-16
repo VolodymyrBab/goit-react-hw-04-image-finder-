@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 
 export default function ImageGalleryItem({ getIndex, image, tags, onClick, index }) {
-    return <li onClick={onClick} className={css.ImageGalleryItem}><img onClick={() => getIndex(index)} src={image} alt={tags} className={css.image}  /> </li>
+    return <li onClick={onClick} className={css.ImageGalleryItem}>
+      <img onClick={() => getIndex(index)} src={image} alt={tags} className={css.image}  />
+       </li>
 }
 
 ImageGalleryItem.propTypes = {

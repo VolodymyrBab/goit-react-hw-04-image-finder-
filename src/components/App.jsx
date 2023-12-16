@@ -7,7 +7,7 @@ import Modal from 'components/Modal/Modal';
 import css from './App.module.css';
 import Button from './Button/Button';
 
-export default function App() {
+export const App = ()=> {
   const [query, setQuery] = useState('');
   const [images, setImages] = useState([]);
   const [page, setPage] = useState(1);
@@ -19,11 +19,13 @@ export default function App() {
 
   const saveSearchQuerry = (query) => {
     setQuery(query);
-    setPage(1)
+    setPage(1);
+    setImages([]);
+    
   }
 
   useEffect(() => {
-    if (query === '') {
+    if (!query) {
       return
     }
     setLoading(true);
@@ -43,6 +45,25 @@ export default function App() {
       .catch(error => setError(error))
       .finally(() => { setLoading(false); });
   }, [page, query]);
+
+  // useEffect(() => {
+	// 	if (!searchQuery) return;
+	//   const startFetching = async () => {
+	// 	 setLoading(true);
+  //     try {
+  //       const { hits, totalHits } = await getPictures(searchQuery, page);
+  //       setPictures(prevPictures =>
+  //         page === 1 ? hits : [...prevPictures, ...hits]
+  //       );
+  //       seteTotalPics(totalHits);
+  //     } catch (error) {
+  //       setError(error.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   startFetching();
+  // }, [searchQuery, page]);
   
   const toggleModal = () => {
     setShowModal(prev => !prev);
@@ -75,7 +96,7 @@ export default function App() {
           wrapperClassName=""
           visible={true} />}
 
-    {images.length >= 12 && images.length % 12 === 0 && <Button onClick={() => { setPage(prevPage => prevPage + 1) }} />}
+    {images.length >= 12 && images.length % 12 === 0 && <Button onClick={() => { setPage(page => page + 1) }} />}
     
 
       {showModal && <Modal onClose={toggleModal}><img src={images[index].largeImageURL} alt={images[index].tags}/></Modal>}
